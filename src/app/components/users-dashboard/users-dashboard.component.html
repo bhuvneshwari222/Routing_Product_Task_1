@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-12 mb-3 text-right">
+        <button [routerLink]="['addUser']" mat-raised-button color="accent">Add User</button>
+    </div>
+    <div class="col-md-4">
+        <ul class="list-group" *ngIf="usersArr.length > 0; else noUser">
+            <li [routerLink]="user.userId" [queryParams]="{
+                userRole: user.userRole
+              }" routerLinkActive="active" *ngFor="let user of usersArr; trackBy: trackByUserID"
+                class="list-group-item">
+                {{user.userName}}
+                <small class="badge p-1" [ngClass]="{
+                    'badge-success': user.isActive,
+                    'badge-danger': !user.isActive}">
+                    {{user.isActive ? 'Active' : 'Inactive'}}
+                </small>
+            </li>
+        </ul>
+
+        <ng-template #noUser>
+            <p class="alert alert-danger">No user added yet!!!</p>
+        </ng-template>
+    </div>
+    <div class="col-md-8 mt-md-0 mt-4">
+        <router-outlet></router-outlet>
+    </div>
+</div>

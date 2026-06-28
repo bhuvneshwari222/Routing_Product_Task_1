@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12">
+        <mat-card *ngIf="productObj">
+            <mat-card-content>
+                <img class="prodImg" [src]="productObj.image" [alt]="productObj.prodName" [title]="productObj.prodName">
+                <p class="mt-3">The product is {{productObj.prodName}} and its status is
+                    <strong [ngClass]="{
+                            'text-success': productObj.prodStatus === 'Delivered',
+                            'text-warning': productObj.prodStatus === 'Inprogress',
+                            'text-primary': productObj.prodStatus === 'Dispatched'}">
+                        {{productObj.prodStatus}}
+                    </strong>
+                </p>
+                <p>{{productObj.description}}</p>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+                <button 
+                    (click)="redirectToEdit()"
+                    mat-raised-button color="primary">Edit</button>
+                <button (click)="onRemove()" mat-raised-button color="warn">Remove</button>
+                <!-- <button [routerLink]="['/products','P106']" mat-raised-button color="primary">Load Samsung TV</button> -->
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+
+  <!-- [routerLink]="['/products', productId, 'edit']" -->

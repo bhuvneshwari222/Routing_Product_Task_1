@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-12">
+        <mat-card>
+            <mat-card-title class="text-bold">
+                {{isInEditMode ? 'Update Product': 'Add Product'}}
+            </mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="productForm" (ngSubmit)="onProductSubmit()">
+                    <div class="form-group">
+                        <label for="prodName">Product Name*</label>
+                        <input formControlName="prodName" id="prodName" type="text" class="form-control">
+                        <strong *ngIf="f['prodName'].touched && f['prodName'].hasError('required')"
+                            class="text-danger">Product Name is a required field.</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Product Image*</label>
+                        <input formControlName="image" id="image" type="text" class="form-control">
+                        <strong *ngIf="f['image'].touched && f['image'].hasError('required')"
+                            class="text-danger">Product Image is a required field.</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prodStatus">Product Status</label>
+                        <select formControlName="prodStatus" id="prodStatus" type="text" class="form-control">
+                            <option value="Delivered">Delivered</option>
+                            <option value="Inprogress">Inprogress</option>
+                            <option value="Dispatched">Dispatched</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="canReturn">Can Return</label>
+                        <select formControlName="canReturn" id="canReturn" type="text" class="form-control">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea rows="3" formControlName="description" id="description" class="form-control"></textarea>
+                        <strong *ngIf="f['description'].touched && f['description'].hasError('required')"
+                            class="text-danger">Description is a required field.</strong>
+                    </div>
+
+                    <button *ngIf="!isInEditMode" mat-raised-button color="primary" class="w-100">Add Product</button>
+                    <button
+                    [disabled]="disabledBtn"
+                     (click)="onUpdateProduct()" type="button" *ngIf="isInEditMode" mat-raised-button
+                        color="primary" class="w-100">Update Product</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
