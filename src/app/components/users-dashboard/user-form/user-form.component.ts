@@ -123,9 +123,13 @@ export class UserFormComponent implements OnInit {
 
   addSkillControl() {
     if (this.f['skills'].valid) {
-      let control = new FormControl(null, Validators.requiredTrue);
+      let control = new FormControl(null, Validators.required);
       this.skillsArr.push(control);
     }
+  }
+
+  onRemoveSkill(i: number){
+    this.skillsArr.removeAt(i);
   }
 
   isAddressSameHandler() {
@@ -169,6 +173,7 @@ export class UserFormComponent implements OnInit {
             this._snackbar.openSnackBar(resp.msg)
             this._router.navigate(['/users']);
             this.usersForm.reset();
+            this._userService.setFirstUserSub$.next(true)
           },
           error: err => {
             this._snackbar.openSnackBar(err.msg)
@@ -227,5 +232,6 @@ export class UserFormComponent implements OnInit {
         })
     }
   }
+  
 
 }

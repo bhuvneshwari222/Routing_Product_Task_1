@@ -79,6 +79,7 @@ export class ProductFormComponent implements OnInit {
             this.productForm.reset()
             this._router.navigate(['products'])
             this._snackbar.openSnackBar(resp.msg);
+            this._prodService.setFirstProductSub$.next(true)
           },
           error: err => {
             this._snackbar.openSnackBar(err)
