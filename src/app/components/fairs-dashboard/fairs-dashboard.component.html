@@ -1,1 +1,11 @@
-<p>fairs-dashboard works!</p>
+<div class="row">
+    <div class="col-md-4">
+       <app-fairs-card 
+       *ngFor="let fair of fairsArr"
+       [fairObj]="fair"
+       ></app-fairs-card>
+    </div>
+    <div class="col-md-8">
+        <router-outlet></router-outlet>
+    </div>
+</div>

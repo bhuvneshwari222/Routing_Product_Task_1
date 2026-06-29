@@ -9,6 +9,8 @@ import { ProductFormComponent } from "./components/products-dashboard/product-fo
 import { UserFormComponent } from "./components/users-dashboard/user-form/user-form.component";
 import { UserDetailsComponent } from "./components/users-dashboard/user-details/user-details.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
+import { FairsCardComponent } from "./components/fairs-dashboard/fairs-card/fairs-card.component";
+import { FairsDetailsComponent } from "./components/fairs-dashboard/fairs-details/fairs-details.component";
 
 const routes: Routes = [
     {
@@ -58,7 +60,13 @@ const routes: Routes = [
     },
     {
         path: 'fairs',
-        component: FairsDashboardComponent
+        component: FairsDashboardComponent,
+        children: [
+            {
+                path: ':fairID',
+                component: FairsDetailsComponent
+            }
+        ]
     },
     {
         path: 'page-not-found',

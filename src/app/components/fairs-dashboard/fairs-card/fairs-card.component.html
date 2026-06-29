@@ -1,0 +1,12 @@
+<mat-card 
+[routerLink]="fairObj.fairId"
+routerLinkActive="active"
+class="mb-4 fairCard">
+    <mat-card-content>
+        <h1>{{fairObj.fairName}}</h1>
+        <div class="typeAndDate">
+            <p class="m-0">Event Type: {{fairObj.type}}</p>
+            <p class="m-0">Date: {{fairObj.startDate * 1000 | date}}</p>
+        </div>
+    </mat-card-content>
+</mat-card>

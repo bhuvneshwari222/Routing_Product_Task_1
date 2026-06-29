@@ -22,6 +22,8 @@ import { GetConfirmComponent } from './components/get-confirm/get-confirm.compon
 import { UserDetailsComponent } from './components/users-dashboard/user-details/user-details.component';
 import { UserFormComponent } from './components/users-dashboard/user-form/user-form.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { FairsCardComponent } from './components/fairs-dashboard/fairs-card/fairs-card.component';
+import { FairsDetailsComponent } from './components/fairs-dashboard/fairs-details/fairs-details.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     GetConfirmComponent,
     UserDetailsComponent,
     UserFormComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    FairsCardComponent,
+    FairsDetailsComponent
   ],
   imports: [
     BrowserModule,
