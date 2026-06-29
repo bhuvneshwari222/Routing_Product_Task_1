@@ -70,7 +70,7 @@ export class ProductsService {
   }
 
   createProduct(product: Iproduct): Observable<IproductResp<Iproduct>> {
-    this.productsArr.push(product);
+    this.productsArr.unshift(product);
     return of({
       msg: `The new Product with id ${product.prodID} is created successfully!!!`,
       data: product
