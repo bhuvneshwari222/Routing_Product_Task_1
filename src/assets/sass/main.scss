@@ -1,4 +1,10 @@
 
+@import "./abstract/var";
+@import "./abstract/mixins";
+
+
 @import "./base/typography";
 @import "./components/btn";
-
+@import "./components/fairCards";
+@import "./components/auth";
+@import "./components/usersDash.scss"

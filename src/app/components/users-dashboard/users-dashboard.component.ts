@@ -17,10 +17,13 @@ export class UsersDashboardComponent implements OnInit {
     private _snackBar: SnackbarService,
     private _router: Router,
     private _routes: ActivatedRoute
-  ) { }
+  ) { 
+    this.usersArr = this._routes.snapshot.data['users'];
+    this.setFirstUserAsSelected()
+  }
 
   ngOnInit(): void {
-    this.getUsers();
+    // this.getUsers();
     this._userService.setFirstUserSub$.subscribe({
       next: resp =>{
         if(resp){
@@ -38,7 +41,7 @@ export class UsersDashboardComponent implements OnInit {
       .subscribe({
         next: resp => {
           this.usersArr = resp;
-          this.setFirstUserAsSelected()
+          this.setFirstUserAsSelected();
         },
         error: err => {
           this._snackBar.openSnackBar(err.msg);

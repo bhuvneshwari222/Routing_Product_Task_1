@@ -21,10 +21,16 @@ export class ProductComponent implements OnInit {
     private _productService: ProductsService,
     private _matDialog: MatDialog,
     private _snackBar: SnackbarService
-  ) { }
+  ) { 
+    console.log(this._routes);
+    
+    this._routes.data.subscribe(resp => {
+      this.productObj = resp['product']
+    })
+  }
 
   ngOnInit(): void {
-    this.getProduct()
+    // this.getProduct()
   }
 
   getProduct() {

@@ -68,7 +68,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <button type="button" *ngIf="skillsArr.length < 10; else noSkill"
-                                [disabled]="f['skills'].invalid || editUserObj?.userRole === 'candidate'"
+                                [disabled]="f['skills'].invalid || editUserObj.userRole === 'candidate'"
                                     (click)="addSkillControl()" mat-raised-button color="primary">Add Skills
                                 </button>
                                 <ng-template #noSkill>

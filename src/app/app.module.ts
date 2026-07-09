@@ -24,6 +24,8 @@ import { UserFormComponent } from './components/users-dashboard/user-form/user-f
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { FairsCardComponent } from './components/fairs-dashboard/fairs-card/fairs-card.component';
 import { FairsDetailsComponent } from './components/fairs-dashboard/fairs-details/fairs-details.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { FairsDetailsComponent } from './components/fairs-dashboard/fairs-detail
     UserFormComponent,
     PageNotFoundComponent,
     FairsCardComponent,
-    FairsDetailsComponent
+    FairsDetailsComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { FairsDetailsComponent } from './components/fairs-dashboard/fairs-detail
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatChipsModule
+    MatChipsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

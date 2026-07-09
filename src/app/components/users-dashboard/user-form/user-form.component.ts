@@ -1,18 +1,21 @@
 import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IcanDeactivate } from 'src/app/models/canDeactivate';
 import { Iuser } from 'src/app/models/users';
 import { FormUtilityService } from 'src/app/service/form-utility.service';
 import { SnackbarService } from 'src/app/service/snackbar.service';
 import { UsersService } from 'src/app/service/users.service';
+import { GetConfirmComponent } from '../../get-confirm/get-confirm.component';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, IcanDeactivate {
   usersForm !: FormGroup;
   isInEditMode: boolean = false;
   countries = [
@@ -65,7 +68,8 @@ export class UserFormComponent implements OnInit {
     private _snackbar: SnackbarService,
     private _router: Router,
     private _routes: ActivatedRoute,
-    private _formUtility: FormUtilityService
+    private _formUtility: FormUtilityService,
+    private _matDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -100,7 +104,7 @@ export class UserFormComponent implements OnInit {
           zipcode: new FormControl(null, [Validators.required]),
         })
       }),
-      isAddressSame: new FormControl({ value: null, disabled: true}, Validators.required),
+      isAddressSame: new FormControl({ value: null, disabled: true }, Validators.required),
       skills: new FormArray([])
     })
   }
@@ -128,7 +132,7 @@ export class UserFormComponent implements OnInit {
     }
   }
 
-  onRemoveSkill(i: number){
+  onRemoveSkill(i: number) {
     this.skillsArr.removeAt(i);
   }
 
@@ -192,9 +196,9 @@ export class UserFormComponent implements OnInit {
             this.editUserObj = resp;
             this.usersForm.patchValue(resp);
             this._formUtility.patchFormArr(resp.skills, this.skillsArr);
-            if(resp.userRole === 'candidate'){
+            if (resp.userRole === 'candidate') {
               this.usersForm.disable();
-            }else{
+            } else {
               this.usersForm.enable();
             }
             if (this.f['address'].get('current')?.valid) {
@@ -217,7 +221,7 @@ export class UserFormComponent implements OnInit {
       this._userService.updateUser(updatedUser)
         .subscribe({
           next: resp => {
-            this._router.navigate(['/users',this.userId],{
+            this._router.navigate(['/users', this.userId], {
               queryParams: {
                 userRole: resp.data.userRole
               }
@@ -232,6 +236,13 @@ export class UserFormComponent implements OnInit {
         })
     }
   }
-  
 
-}
+  canDeactivate(): boolean {
+    if (this.usersForm.dirty && this.isInEditMode) {
+      let getConfirmation = confirm('Are you sure , you want to descard the changes?')
+      return getConfirmation
+    }
+    return true;
+  }
+
+} 

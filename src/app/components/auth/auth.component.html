@@ -1,0 +1,76 @@
+<main class="main-auth">
+    <ng-container *ngIf="!allReadyHasAcc">
+        <mat-card>
+            <mat-card-title class="mb-2">
+                Sign Up
+            </mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="mb-2">
+                    <div class="form-group">
+                        <label for="email">Email<sup class="text-danger">*</sup></label>
+                        <input formControlName="email" id="email" type="text" class="form-control">
+                        <strong *ngIf="signUpControls['email'].touched && signUpControls['email'].hasError('required')"
+                            class="text-danger">Email is a required field</strong>
+                        <strong *ngIf="signUpControls['email'].dirty && signUpControls['email'].hasError('pattern')"
+                            class="text-danger">Please enter a valid email address.</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password<sup class="text-danger">*</sup></label>
+                        <input formControlName="password" id="password" type="password" class="form-control">
+                        <strong
+                            *ngIf="signUpControls['password'].touched && signUpControls['password'].hasError('required')"
+                            class="text-danger">Password is a required field
+                        </strong>
+                        <strong
+                            *ngIf="signUpControls['password'].dirty && signUpControls['password'].hasError('pattern')"
+                            class="text-danger">Password must be at least 8 characters long and include one uppercase
+                            letter, one lowercase letter, one number, and one special character.
+                        </strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userRole">UserRole<sup class="text-danger">*</sup></label>
+                        <select formControlName="userRole" id="userRole" class="form-control">
+                            <option value="buyer">Buyer</option>
+                            <option value="admin">Admin</option>
+                            <option value="superAdmin">SuperAdmin</option>
+                        </select>
+                    </div>
+
+                    <button mat-raised-button color="primary" class="w-100">Sign Up</button>
+                </form>
+                <a href="javascript:;" (click)="allReadyHasAcc = true">Already have account</a>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+    <ng-container *ngIf="allReadyHasAcc">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>Log In</mat-card-title>
+                <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="mb-2">
+                    <div class="form-group">
+                        <label for="email">Email<sup class="text-danger">*</sup></label>
+                        <input formControlName="email" id="email" type="text" class="form-control">
+                        <strong *ngIf="logInControls['email'].touched && logInControls['email'].hasError('required')"
+                            class="text-danger">Email is a required field
+                        </strong>
+                        <strong *ngIf="logInControls['email'].dirty && logInControls['email'].hasError('pattern')"
+                            class="text-danger">Please enter a valid email address.
+                        </strong>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password<sup class="text-danger">*</sup></label>
+                        <input formControlName="password" id="password" type="password" class="form-control">
+                        <strong
+                            *ngIf="logInControls['password'].touched && logInControls['password'].hasError('required')"
+                            class="text-danger">Password is a required field
+                        </strong>
+                    </div>
+                    <button mat-raised-button color="primary" class="w-100">Log In</button>
+                </form>
+                <a href="javascript:;" (click)="allReadyHasAcc = false">Don't have account</a>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+</main>

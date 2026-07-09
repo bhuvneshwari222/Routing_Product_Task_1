@@ -21,9 +21,17 @@ export class UserDetailsComponent implements OnInit {
     private _userService: UsersService,
     private _snackBar: SnackbarService,
     private _matDialog: MatDialog
-  ) { }
+  ) {
+    this._routes.data.subscribe(resp => {
+      this.userObj = resp['user'];
+    })
+  }
 
   ngOnInit(): void {
+    // this.getUser();
+  }
+
+  getUser() {
     this._routes.params.subscribe(param => {
       this.userId = param['userID']
       if (this.userId) {
@@ -54,7 +62,7 @@ export class UserDetailsComponent implements OnInit {
               next: resp => {
                 this._snackBar.openSnackBar(resp.msg);
                 this._router.navigate(['/users'])
-                this._userService.setFirstUserSub$.next(true)                
+                this._userService.setFirstUserSub$.next(true)
               },
               error: err => {
                 this._snackBar.openSnackBar(err.msg)

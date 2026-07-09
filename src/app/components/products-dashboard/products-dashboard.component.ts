@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Iproduct } from 'src/app/models/products';
 import { ProductsService } from 'src/app/service/products.service';
 import { SnackbarService } from 'src/app/service/snackbar.service';
@@ -15,11 +15,16 @@ export class ProductsDashboardComponent implements OnInit {
   constructor(
     private _productService: ProductsService,
     private _router: Router,
-    private _snackbar: SnackbarService
-  ) { }
+    private _snackbar: SnackbarService,
+    private _routes: ActivatedRoute
+  ) {
+    // console.log(this._routes);
+    this.productsArr = this._routes.snapshot.data['products'];
+    this.setFirstProductAsSelected();
+   }
 
   ngOnInit(): void {
-    this.getProductsArr()
+    // this.getProductsArr()
     this._productService.setFirstProductSub$.subscribe({
       next: resp =>{
         if(resp){
@@ -32,18 +37,18 @@ export class ProductsDashboardComponent implements OnInit {
     })
   }
 
-  getProductsArr() {
-    this._productService.fetchProducts()
-      .subscribe({
-        next: data => {
-          this.productsArr = data;
-          this.setFirstProductAsSelected()
-        },
-        error: err => {
-          console.log(err);
-        }
-      })
-  }
+  // getProductsArr() {
+  //   this._productService.fetchProducts()
+  //     .subscribe({
+  //       next: data => {
+  //         this.productsArr = data;
+  //         this.setFirstProductAsSelected()
+  //       },
+  //       error: err => {
+  //         console.log(err);
+  //       }
+  //     })
+  // }
 
   setFirstProductAsSelected() {
     this._router.navigate(['products',this.productsArr[0].prodID], {

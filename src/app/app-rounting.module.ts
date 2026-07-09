@@ -9,22 +9,45 @@ import { ProductFormComponent } from "./components/products-dashboard/product-fo
 import { UserFormComponent } from "./components/users-dashboard/user-form/user-form.component";
 import { UserDetailsComponent } from "./components/users-dashboard/user-details/user-details.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
-import { FairsCardComponent } from "./components/fairs-dashboard/fairs-card/fairs-card.component";
 import { FairsDetailsComponent } from "./components/fairs-dashboard/fairs-details/fairs-details.component";
+import { AuthComponent } from "./components/auth/auth.component";
+import { AuthGuard } from "./service/auth.guard";
+import { UserRoleGuard } from "./service/userRole.guard";
+import { CanDeactivateGuard } from "./service/can-deactivate.guard";
+import { ProductResolver } from "./service/products.resolver";
+import { NewProductsResolver } from "./service/new-products.resolver";
+import { UsersResolver } from "./service/users.resolver";
 
 const routes: Routes = [
     {
-        path: 'home',
-        component: HomeDashboardComponent
+        path: '',
+        component: AuthComponent
     },
     {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        path: 'home',
+        title: 'Home',
+        component: HomeDashboardComponent,
+        canActivate: [AuthGuard, UserRoleGuard],
+        data: {
+            userRoles: ['admin', 'superAdmin', 'buyer']
+        }
     },
+    // {
+    //     path: '',
+    //     redirectTo: 'home',
+    //     pathMatch: 'full'
+    // },
     {
         path: 'users',
+        title: 'Users',
         component: UsersDashboardComponent,
+        canActivate: [AuthGuard, UserRoleGuard],
+        data: {
+            userRoles: ['admin', 'superAdmin']
+        },
+        resolve: {
+            users: UsersResolver
+        },
         children: [
             {
                 path: 'addUser',
@@ -32,17 +55,30 @@ const routes: Routes = [
             },
             {
                 path: ':userID',
-                component: UserDetailsComponent
+                component: UserDetailsComponent,
+                resolve: {
+                    user: UsersResolver
+                }
             },
             {
                 path: ':userID/edit',
-                component: UserFormComponent
+                component: UserFormComponent,
+                canDeactivate: [CanDeactivateGuard],
             }
         ]
     },
     {
         path: 'products',
+        title: 'Products',
         component: ProductsDashboardComponent,
+        canActivate: [AuthGuard, UserRoleGuard],
+        resolve: {
+            // products: ProductResolver
+            products: NewProductsResolver
+        },
+        data: {
+            userRoles: ['admin', 'superAdmin', 'buyer']
+        },
         children: [
             {
                 path: 'addProduct',
@@ -50,17 +86,26 @@ const routes: Routes = [
             },
             {
                 path: ':prodID',
-                component: ProductComponent
+                component: ProductComponent,
+                resolve: {
+                    product: NewProductsResolver
+                },
             },
             {
                 path: ':prodID/edit',
-                component: ProductFormComponent
+                component: ProductFormComponent,
+                canDeactivate: [CanDeactivateGuard],
             }
         ]
     },
     {
         path: 'fairs',
+        title: 'Fairs',
         component: FairsDashboardComponent,
+        canActivate: [AuthGuard, UserRoleGuard],
+        data: {
+            userRoles: ['superAdmin']
+        },
         children: [
             {
                 path: ':fairID',
@@ -70,7 +115,10 @@ const routes: Routes = [
     },
     {
         path: 'page-not-found',
-        component: PageNotFoundComponent
+        component: PageNotFoundComponent,
+        data: {
+            msg: `Page Not Found !!!`
+        }
     },
     {
         path: '**',

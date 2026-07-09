@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IcanDeactivate } from 'src/app/models/canDeactivate';
 import { Iproduct } from 'src/app/models/products';
 import { ProductsService } from 'src/app/service/products.service';
 import { SnackbarService } from 'src/app/service/snackbar.service';
@@ -10,7 +11,7 @@ import { SnackbarService } from 'src/app/service/snackbar.service';
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss']
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, IcanDeactivate {
   productForm !: FormGroup;
   isInEditMode: boolean = false;
   productID !: string;
@@ -110,6 +111,14 @@ export class ProductFormComponent implements OnInit {
           }
         })
     }
+  }
+
+  canDeactivate():boolean{
+    if(this.productForm.dirty && this.isInEditMode){
+      let getConfirmation = confirm('Are you sure , you want to descard the changes?')
+      return getConfirmation
+    }
+    return true; 
   }
 
 
