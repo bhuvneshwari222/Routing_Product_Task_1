@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ILoginUser, IregisterUser } from '../models/auth';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   AUTH_BASE_URL : string = environment.authBaseUrl;
+  isLogInSub$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _http : HttpClient

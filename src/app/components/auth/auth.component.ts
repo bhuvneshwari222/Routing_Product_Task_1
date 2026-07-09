@@ -60,6 +60,7 @@ export class AuthComponent implements OnInit {
           this._snackBar.openSnackBar(resp.message);
           this._authService.saveToken(resp.token);
           this._authService.saveUserRole(resp.userRole);
+          this._authService.isLogInSub$.next(true);
           this._router.navigate(['home']);
         },
         error: err =>{
