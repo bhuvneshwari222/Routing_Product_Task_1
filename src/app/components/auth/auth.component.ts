@@ -13,6 +13,7 @@ export class AuthComponent implements OnInit {
   allReadyHasAcc: boolean = false;
   loginForm !: FormGroup;
   signUpForm !: FormGroup;
+  isSpinnerVisible : boolean = false;
 
   constructor(
     private _authService : AuthService,
@@ -49,7 +50,9 @@ export class AuthComponent implements OnInit {
   }
 
   onLogin(){
+    this.isSpinnerVisible = true;
     if(this.loginForm.invalid){
+      this.isSpinnerVisible = false;
       return this.loginForm.markAllAsTouched();
     }else{
       let details = this.loginForm.value;
@@ -57,6 +60,7 @@ export class AuthComponent implements OnInit {
       .subscribe({
         next: resp =>{
           // console.log(resp); 
+          this.isSpinnerVisible = false;
           this._snackBar.openSnackBar(resp.message);
           this._authService.saveToken(resp.token);
           this._authService.saveUserRole(resp.userRole);
@@ -65,6 +69,7 @@ export class AuthComponent implements OnInit {
         },
         error: err =>{
           // console.log(err);
+          this.isSpinnerVisible = false;
           this._snackBar.openSnackBar(err.error.message);
         }
       })

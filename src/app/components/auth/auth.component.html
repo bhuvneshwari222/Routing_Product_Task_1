@@ -73,4 +73,9 @@
             </mat-card-content>
         </mat-card>
     </ng-container>
+    <div *ngIf="isSpinnerVisible" class="spinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
 </main>
