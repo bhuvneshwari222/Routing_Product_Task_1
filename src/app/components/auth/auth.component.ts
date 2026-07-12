@@ -59,7 +59,8 @@ export class AuthComponent implements OnInit {
       this._authService.login(details)
       .subscribe({
         next: resp =>{
-          // console.log(resp); 
+          console.log(resp); 
+          //login successfull
           this.isSpinnerVisible = false;
           this._snackBar.openSnackBar(resp.message);
           this._authService.saveToken(resp.token);

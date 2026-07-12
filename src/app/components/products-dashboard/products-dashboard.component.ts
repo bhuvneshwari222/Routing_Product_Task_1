@@ -18,7 +18,7 @@ export class ProductsDashboardComponent implements OnInit {
     private _snackbar: SnackbarService,
     private _routes: ActivatedRoute
   ) {
-    // console.log(this._routes);
+    console.log(this._routes);
     this.productsArr = this._routes.snapshot.data['products'];
     this.setFirstProductAsSelected();
    }
