@@ -23,7 +23,6 @@ export class ProductComponent implements OnInit {
     private _snackBar: SnackbarService
   ) { 
     console.log(this._routes);
-    
     this._routes.data.subscribe(resp => {
       this.productObj = resp['product']
     })
@@ -66,7 +65,7 @@ export class ProductComponent implements OnInit {
 
   onRemove() {
     let config = new MatDialogConfig()
-    config.data = `Are you sure you wnt to remove this product with id ${this.productId}`;
+    config.data = `Are you sure you wnt to remove this product with id ${this.productObj.prodID}`;
     config.disableClose = true;
     config.width = '400px';
     let dialogRef = this._matDialog.open(GetConfirmComponent, config)
@@ -74,7 +73,7 @@ export class ProductComponent implements OnInit {
       .subscribe({
         next: resp => {
           if (resp) {
-            this._productService.removeProduct(this.productId)
+            this._productService.removeProduct(this.productObj.prodID)
               .subscribe({
                 next: resp => {
                   this._snackBar.openSnackBar(resp.msg)

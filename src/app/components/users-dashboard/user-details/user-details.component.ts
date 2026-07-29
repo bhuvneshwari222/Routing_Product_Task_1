@@ -50,14 +50,14 @@ export class UserDetailsComponent implements OnInit {
 
   onRemoveUser() {
     let config = new MatDialogConfig();
-    config.data = `Are you sure, you want to remove this user details with id ${this.userId}`;
+    config.data = `Are you sure, you want to remove this user details with id ${this.userObj.userId}`;
     config.width = '400px';
     config.disableClose = true;
     let dialogRef = this._matDialog.open(GetConfirmComponent, config)
     dialogRef.afterClosed().subscribe({
       next: resp => {
         if (resp) {
-          this._userService.removeUser(this.userId)
+          this._userService.removeUser(this.userObj.userId)
             .subscribe({
               next: resp => {
                 this._snackBar.openSnackBar(resp.msg);
